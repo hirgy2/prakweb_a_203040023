@@ -1,16 +1,10 @@
 <?php
-// koneksi ke database
-$conn = mysqli_connect("localhost", "root", "", "prakweb_a_203040023_pw");
+session_start();
 
-// ambil dari tabel film / query
-$result = mysqli_query($conn, "SELECT * FROM buku");
+require 'function.php';
+$buku = query("SELECT * FROM buku");
 
-$rows = [];
-while ($row = mysqli_fetch_assoc($result)) {
-  $rows[] = $row;
-}
-// tampung ke variabel buku
-$buku = $rows;
+
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +21,7 @@ $buku = $rows;
 <body>
 
   <h1>Daftar Buku Komik uhuy</h1>
-
+  <a href="tambah.php">Tambah Buku</a>
   <table border="1" cellpading="10" cellspacing="0">
     <tr>
       <th>#</th>
@@ -44,6 +38,12 @@ $buku = $rows;
         <td><?= $row["nama"]; ?></td>
         <td><?= $row["penulis"]; ?></td>
         <td><?= $row["harga"]; ?> </td>
+        <td>
+        <center>
+          <a href="ubah.php?id=<?= $row["id"]; ?>" onclick="return confirm('Ubah Data??')">Ubah</a>
+          <a href="hapus.php?id=<?= $row["id"]; ?>" onclick="return confirm('Hapus Data??')">Hapus</a>
+        </center>
+        </td>
       </tr>
     <?php endforeach; ?>
   </table>
